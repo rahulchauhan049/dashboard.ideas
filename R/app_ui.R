@@ -40,6 +40,11 @@ app_ui <- function(request) {
           tabName = "DT",
           icon=icon("database")
         ),
+        menuItem(
+          "Plotly",
+          tabName = "Plotly",
+          icon = icon("eye")
+        ),
         menuItem("Citations",
                  tabName = "cite",
                  icon = icon("university")
@@ -73,6 +78,10 @@ app_ui <- function(request) {
         tabItem(
           tabName = "DT",
           mod_DT_ui("DT_ui_1")
+        ),
+        tabItem(
+          tabName = "Plotly",
+          mod_plotly_ui("plotly_ui_1")
         ),
         tabItem(
           "cite",

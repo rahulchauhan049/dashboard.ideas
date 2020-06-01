@@ -23,6 +23,7 @@ golem::add_module( name = "data_summary" ) # Name of the module
 golem::add_module( name = "missing_data" ) # Name of the module
 golem::add_module( name = "leaflet" ) # Name of the module
 golem::add_module( name = "DT" ) # Name of the module
+golem::add_module( name = "plotly" ) # Name of the module
 
 
 

@@ -39,6 +39,8 @@ app_server <- function(input, output, session) {
   
   callModule(mod_DT_server, "DT_ui_1", data_store$darwinized_data)
   
+  callModule(mod_plotly_server, "plotly_ui_1", data_store$darwinized_data)
+  
   callModule(
     bdutilities.app::mod_citation_server,
     id = "bdcite",
