@@ -3,7 +3,7 @@
 #' @param request Internal parameter for `{shiny}`. 
 #'     DO NOT REMOVE.
 #' @import shiny shinydashboard leaflet dplyr dashboardthemes plotly
-#' @import flexdashboard DT
+#' @import flexdashboard DT tidyr
 #' @import formattable leaflet.extras sp bdutilities.app rintrojs shinyBS shinyjs countup
 #' @noRd
 app_ui <- function(request) {
