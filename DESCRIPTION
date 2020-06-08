@@ -24,7 +24,8 @@ Imports:
     rintrojs,
     shinyBS,
     shinyjs,
-    tidyr
+    tidyr,
+    shinyWidgets
 Remotes: 
     bd-R/bdutilities.app,
     nik01010/dashboardthemes

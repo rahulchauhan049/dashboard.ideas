@@ -3,7 +3,7 @@
 #' @param request Internal parameter for `{shiny}`. 
 #'     DO NOT REMOVE.
 #' @import shiny shinydashboard leaflet dplyr dashboardthemes plotly
-#' @import flexdashboard DT tidyr
+#' @import flexdashboard DT tidyr shinyWidgets
 #' @import formattable leaflet.extras sp bdutilities.app rintrojs shinyBS shinyjs countup
 #' @noRd
 app_ui <- function(request) {
@@ -77,6 +77,7 @@ app_ui <- function(request) {
         ),
         tabItem(
           tabName = "DT",
+          mod_field_selection_ui("field_selection_ui_1"),
           mod_DT_ui("DT_ui_1")
         ),
         tabItem(

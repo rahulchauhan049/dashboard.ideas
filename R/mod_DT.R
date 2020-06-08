@@ -11,6 +11,7 @@ mod_DT_ui <- function(id){
   ns <- NS(id)
   fluidPage(
     fluidRow(
+      verbatimTextOutput(ns("text")),
       br(),
       selectizeInput(
         ns("show_vars"),
@@ -32,49 +33,33 @@ mod_DT_ui <- function(id){
 #' DT Server Function
 #'
 #' @noRd 
-mod_DT_server <- function(input, output, session, dataset){
+mod_DT_server <- function(input, output, session, dataset, temp){
   ns <- session$ns
   
+  output$text <- renderText({
+    "This is temperary"
+  })
+  
+  observeEvent(temp$click(),{
+    if(!is.null(temp$test())){
+      output$text <- renderText({
+        temp$test()
+      })
+    }
+  })
+
+  
+  
+  # observeEvent(temp$vals$click(),{
+  #   output$text <- renderText({
+  #     temp$vals$test()
+  #   })
+  # })
+
+  
+  
+  
   observe({
-    
-    # choices = c(
-    #   "scientificName",
-    #   "name",
-    #   "countryCode",
-    #   "generalComments",
-    #   "state_province",
-    #   "begin_date",
-    #   "end_date",
-    #   "locality",
-    #   "decimalLatitude",
-    #   "decimalLongitude",
-    #   "verbatimLongitude",
-    #   "verbatimLatitude",
-    #   "coordinateUncertaintyInMeters",
-    #   "coordinate_uncertainty_in_meters",
-    #   "coordinatePrecision",
-    #   "elevation",
-    #   "elevationAccuracy",
-    #   "depth",
-    #   "depthAccuracy",
-    #   "establishmentMeans",
-    #   "basisOfRecord",
-    #   "datasetName",
-    #   "missing_name",
-    #   "url",
-    #   "observation_type",
-    #   "date",
-    #   "license",
-    #   "datecollected",
-    #   "kingdom",
-    #   "phylum",
-    #   "order",
-    #   "family",
-    #   "genus",
-    #   "species",
-    #   "species_guess"
-    # )
-    # print(colnames(dataset()))
     choices = colnames(dataset())
     column_names <- vector()
     for(i in choices){

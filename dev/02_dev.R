@@ -24,6 +24,9 @@ golem::add_module( name = "missing_data" ) # Name of the module
 golem::add_module( name = "leaflet" ) # Name of the module
 golem::add_module( name = "DT" ) # Name of the module
 golem::add_module( name = "plotly" ) # Name of the module
+golem::add_module( name = "field_selection" ) # Name of the module
+
+
 
 
 
