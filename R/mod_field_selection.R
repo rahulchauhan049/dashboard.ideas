@@ -11,7 +11,12 @@ mod_field_selection_ui <- function(id){
   ns <- NS(id)
   fluidPage(
     fluidRow(
-      actionButton(ns("show"), "Show modal dialog")
+      actionButton(ns("show"), "Show modal dialog"),
+      div(style = "display:none;",
+          checkboxGroupInput(ns("checkboxgroup_spatial"), "Input checkbox 2",
+                             c("Item A", "Item B", "Item C")
+          )
+      )
     )
   )
 }
@@ -19,9 +24,12 @@ mod_field_selection_ui <- function(id){
 #' field_selection Server Function
 #'
 #' @noRd 
-mod_field_selection_server <- function(input, output, session, dataset){
+mod_field_selection_server <- function(input, output, session, dataset, pre_selected){
   ns <- session$ns
   missing <- vector()
+  x <- vector()
+  choices <- vector()
+  a <- vector()
   column_present <- c(
     #spatial Columns
     "countryCode",
@@ -123,9 +131,12 @@ mod_field_selection_server <- function(input, output, session, dataset){
 
   
  
-  add_row <- function(id1, id2, col_name){
+  add_row <- function(id1, id2, col_name, selected = FALSE){
 
     if(col_name %in% colnames(dataset())){
+      if(col_name %in% pre_selected){
+        selected = TRUE
+      }
       fluidRow(
         column(
           6,
@@ -136,7 +147,7 @@ mod_field_selection_server <- function(input, output, session, dataset){
           checkboxInput(
             ns(id2),
             label = col_name,
-            value = TRUE
+            value = selected
           )
         )
       )
@@ -144,13 +155,14 @@ mod_field_selection_server <- function(input, output, session, dataset){
   }
   
 
-  observeEvent(input$show, {
+  observeEvent(input[["show"]], {
     showModal(
       modalDialog(
         fluidPage(
           fluidRow(
             column(
               3,
+              verbatimTextOutput(ns("te")),
               radioButtons(
                 ns("a"),
                 label = "", 
@@ -190,7 +202,7 @@ mod_field_selection_server <- function(input, output, session, dataset){
                   checkboxInput(
                     ns("cehck_select_spatial"),
                     label = "Select/Deselect All",
-                    value = TRUE
+                    value = FALSE
                   )
                 )
               ),
@@ -295,6 +307,9 @@ mod_field_selection_server <- function(input, output, session, dataset){
               },
               lapply(missing, function(i){
                 if(name_with_missing_number()[[i]]){
+                  if(i %in% pre_selected){
+                    selected = TRUE
+                  }
                   fluidRow(
                     column(
                       6,
@@ -305,7 +320,7 @@ mod_field_selection_server <- function(input, output, session, dataset){
                       checkboxInput(
                         ns(paste0("cb_",i)),
                         label = i,
-                        value = TRUE
+                        value = FALSE
                       )
                     )
                   )
@@ -313,19 +328,43 @@ mod_field_selection_server <- function(input, output, session, dataset){
               })
             )
           )
-        )
+        ),
         # textInput(ns("dataset"), "Choose data set",
         #           placeholder = 'Try "mtcars" or "abc"', "fasfafsafa"
         # ),
         # span('(Try the name of a valid data object like "mtcars", ',
         #      'then a name of a non-existent object like "abc")'),
-        # footer = tagList(
-        #   modalButton("Cancel"),
-        #   actionButton(ns("ok"), "OK")
-        # )
+        footer = tagList(
+          modalButton("Cancel"),
+          actionButton(ns("ok"), "OK")
+        )
       )
     )
   })
+  
+  observe({
+    for(i in colnames(dataset())){
+      if(!is.null(input[[paste0("cb_",i)]])){
+        choices <- c(choices, i)
+        if(input[[paste0("cb_",i)]]==TRUE){
+          x <- c(x, i)
+        }
+      }
+    }
+    # Can use character(0) to remove all choices
+    if (is.null(x))
+      x <- character(0)
+    
+    # Can also set the label and select items
+    updateCheckboxGroupInput(session, "checkboxgroup_spatial",
+                             label = paste("Checkboxgroup label", length(x)),
+                             choices = choices,
+                             selected = x
+    )
+    
+
+  })
+  
   
   observeEvent(input$ok,{
     removeModal()
@@ -334,8 +373,10 @@ mod_field_selection_server <- function(input, output, session, dataset){
   
   return(
     list(
+      columns = reactive({input$checkboxgroup_spatial}),
       click = reactive({input$ok}),
-      test = reactive({input$dataset})
+      test = reactive({input$dataset}),
+      inp = input
     ) 
   )
 }

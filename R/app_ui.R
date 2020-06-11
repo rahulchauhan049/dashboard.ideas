@@ -77,7 +77,7 @@ app_ui <- function(request) {
         ),
         tabItem(
           tabName = "DT",
-          mod_field_selection_ui("field_selection_ui_1"),
+          # mod_field_selection_ui("field_selection_ui_1"),
           mod_DT_ui("DT_ui_1")
         ),
         tabItem(
