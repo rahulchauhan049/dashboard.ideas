@@ -32,8 +32,8 @@ golem::add_module( name = "field_selection" ) # Name of the module
 
 ## Add helper functions ----
 ## Creates ftc_* and utils_*
-golem::add_fct( "helpers" ) 
-golem::add_utils( "helpers" )
+golem::add_fct( "create_group" ) 
+golem::add_utils( "create_group" )
 
 ## External resources
 ## Creates .js and .css files at inst/app/www

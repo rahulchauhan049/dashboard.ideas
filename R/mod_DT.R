@@ -31,10 +31,10 @@ mod_DT_ui <- function(id){
 #' DT Server Function
 #'
 #' @noRd 
-mod_DT_server <- function(input, output, session, dataset, pre_selected){
+mod_DT_server <- function(input, output, session, dataset, pre_selected, group){
   ns <- session$ns
   
-  ns <- session$ns
+  
   missing <- vector()
   x <- vector()
   choices <- vector()
@@ -340,13 +340,13 @@ mod_DT_server <- function(input, output, session, dataset, pre_selected){
                   )
                 )
               ),
-              for(i in colnames(dataset())){
-                if(i %in% column_present){
-                }else{
-                  missing <- c(missing, i)
-                }
-              },
-              lapply(missing, function(i){
+              # for(i in colnames(dataset())){
+              #   if(i %in% column_present){
+              #   }else{
+              #     missing <- c(missing, i)
+              #   }
+              # },
+              lapply(group()$unlisted, function(i){
                 if(name_with_missing_number()[[i]]){
                   if(i %in% pre_selected){
                     selected = TRUE

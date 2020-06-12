@@ -6,7 +6,7 @@
 #' @noRd
 app_server <- function(input, output, session) {
   # List the first level callModules here
-  
+  dictionary <- read.csv("dictionary.csv")
   session$onSessionEnded(stopApp)
   
   options(shiny.maxRequestSize = 5000 * 1024 ^ 2)
@@ -21,6 +21,7 @@ app_server <- function(input, output, session) {
     "coordinateUncertaintyInMeters",
     "coordinatePrecision"
   )
+  
   
   
   data_store <-
@@ -43,6 +44,8 @@ app_server <- function(input, output, session) {
                "darwinize",
                dat = data_store$input_data)
   
+  group <- reactive(create_group(dictionary, data_store$darwinized_data()))
+  
   callModule(mod_data_summary_server, "data_summary_ui_1", data_store$darwinized_data)
   
   callModule(mod_missing_data_server, "missing_data_ui_1", data_store$darwinized_data)
@@ -51,7 +54,7 @@ app_server <- function(input, output, session) {
   
   # temp <- callModule(mod_field_selection_server, "field_selection_ui_1", data_store$darwinized_data, pre_selected)
   
-  callModule(mod_DT_server, "DT_ui_1", data_store$darwinized_data, pre_selected)
+  callModule(mod_DT_server, "DT_ui_1", data_store$darwinized_data, pre_selected, group)
   
   callModule(mod_plotly_server, "plotly_ui_1", data_store$darwinized_data)
   

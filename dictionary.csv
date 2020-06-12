@@ -1,0 +1,17 @@
+"spatial","temporal","taxonomic","core"
+"countryCode","eventDate","kingdom","scientificName"
+"locality","day","phylum","date"
+"decimalLatitude","month","order","observed_on"
+"decimalLongitude","year","family","kingdom"
+"verbatimLatitude","dateIdentified","genus","phylum"
+"verbatimLongitude","lastInterpreted","species","order"
+"coordinateUncertaintyInMeters","dateModified","name","family"
+"coordinatePrecision","datecollected","taxonRank","genus"
+"elevation","begin_date","scientificName","species"
+"elevationAccuracy","observed_on","taxonKey","countryCode"
+"depth","date","speciesKey","locality"
+"depthAccuracy",NA,"identifiedBy","identifiedBy"
+"establishmentMeans",NA,"dateIdentified",NA
+NA,NA,"recordedBy",NA
+NA,NA,"recordNumber",NA
+NA,NA,"typeStatus",NA
