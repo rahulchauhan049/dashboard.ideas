@@ -1,4 +1,5 @@
 create_group <- function(dictionary, dataset){
+  dataset <- hyenaData
   t <- list()
   unlisted <- vector()
   for(i in colnames(dictionary)){
@@ -13,7 +14,7 @@ create_group <- function(dictionary, dataset){
         }
       }
     }
-    t[i] <- data.frame(temp1)
+    t[i] <- data.frame(temp1, stringsAsFactors=FALSE)
   }
   temp <- vector()
   for(i in colnames(dataset)){
@@ -21,6 +22,6 @@ create_group <- function(dictionary, dataset){
       temp <- c(temp,i)
     }
   }
-  t["unlisted"] <- data.frame(temp)
+  t["unlisted"] <- data.frame(temp,stringsAsFactors=FALSE)
   return(t)
 }
